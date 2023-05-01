@@ -28,6 +28,7 @@ typedef enum
     PREC_COMPARISON, // < > <= >=
     PREC_TERM,       // + -
     PREC_FACTOR,     // * /
+    PREC_POW,        // ^
     PREC_UNARY,      // ! -
     PREC_CALL,       // . ()
     PREC_PRIMARY
@@ -162,6 +163,9 @@ static void binary()
     case TOKEN_SLASH:
         emitByte(OP_DIVIDE);
         break;
+    case TOKEN_POW:
+        emitByte(OP_POW);
+        break;
     default:
         return; // Unreachable.
     }
@@ -208,6 +212,7 @@ ParseRule rules[] = {
     [TOKEN_SEMICOLON] = {NULL, NULL, PREC_NONE},
     [TOKEN_SLASH] = {NULL, binary, PREC_FACTOR},
     [TOKEN_STAR] = {NULL, binary, PREC_FACTOR},
+    [TOKEN_POW] = {NULL, binary, PREC_POW},
     [TOKEN_BANG] = {NULL, NULL, PREC_NONE},
     [TOKEN_BANG_EQUAL] = {NULL, NULL, PREC_NONE},
     [TOKEN_EQUAL] = {NULL, NULL, PREC_NONE},

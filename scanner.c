@@ -193,6 +193,7 @@ Token scanToken() {
     case '+': return makeToken(TOKEN_PLUS);
     case '/': return makeToken(TOKEN_SLASH);
     case '*': return makeToken(TOKEN_STAR);
+    case '^': return makeToken(TOKEN_POW);
     case '!':
       return makeToken(
           match('=') ? TOKEN_BANG_EQUAL : TOKEN_BANG);
@@ -207,6 +208,5 @@ Token scanToken() {
           match('=') ? TOKEN_GREATER_EQUAL : TOKEN_GREATER);
     case '"': return string();
   }
-
-  return errorToken("Unexpected character.");
+  return errorToken("Unexpected character: %s");
 }

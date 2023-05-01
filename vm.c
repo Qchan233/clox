@@ -3,6 +3,7 @@
 #include "vm.h"
 #include "debug.h"
 #include "compiler.h"
+#include <math.h>
 
 VM vm; 
 
@@ -65,6 +66,13 @@ static InterpretResult run() {
         case OP_SUBTRACT: BINARY_OP(-); break;
         case OP_MULTIPLY: BINARY_OP(*); break;
         case OP_DIVIDE:   BINARY_OP(/); break;
+        case OP_POW:{
+            double b = pop(); 
+            double a = pop(); 
+            push(pow(a,b)); 
+            break;
+        } 
+
         case OP_NEGATE:   push(-pop()); break;
     }
   }

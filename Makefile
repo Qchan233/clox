@@ -8,11 +8,12 @@ TARGET = clox
 SRC_DIR = .
 # 指定所有的源文件（以.c结尾）
 SRCS = $(wildcard $(SRC_DIR)/*.c)
+LNKS = -lm
 # 指定默认的目标（all）
 all: $(TARGET)
 # 指定如何编译目标文件
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LNKS)
 # 指定如何清理编译生成的文件
 clean:
 	rm -f $(TARGET)
