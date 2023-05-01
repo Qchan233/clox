@@ -171,7 +171,6 @@ static Token number(){
 
 Token scanToken() {
   if (peek() == '\\'){
-    scanner.start++;
     advance();
   }
   skipWhitespace();
