@@ -13,7 +13,7 @@ LNKS = -lm
 all: $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LNKS)
 # 指定如何清理编译生成的文件
-test: $(TARGET)
+test: all
 	./$(TARGET) test.lox
 clean:
 	rm -f $(TARGET)
