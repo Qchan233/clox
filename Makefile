@@ -1,5 +1,5 @@
 # 指定编译器
-CC = gcc
+CC=clang
 # 指定编译选项
 CFLAGS = -g -Wall
 # 指定可执行文件的名字
@@ -10,10 +10,10 @@ SRC_DIR = .
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 LNKS = -lm
 # 指定默认的目标（all）
-all: $(TARGET)
-# 指定如何编译目标文件
-$(TARGET): $(SRCS)
+all: $(SRCS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LNKS)
 # 指定如何清理编译生成的文件
+test: $(TARGET)
+	./$(TARGET) test.lox
 clean:
 	rm -f $(TARGET)
