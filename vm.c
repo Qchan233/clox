@@ -65,6 +65,9 @@ static Value peek(int distance)
 static bool isFalsey(Value value) {
   return IS_NIL(value) || (IS_BOOL(value) && !AS_BOOL(value));
 }
+static bool isTruey(Value value) {
+  return !isFalsey(value);
+}
 
 static void concatenate() {
   ObjString* b = AS_STRING(pop());
@@ -84,6 +87,8 @@ static InterpretResult run()
 {
 #define READ_BYTE() (*vm.ip++)
 #define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
+#define READ_SHORT() \
+        (vm.ip += 2, (uint16_t)((vm.ip[-1] << 8) | vm.ip[-2]))
 #define READ_STRING() AS_STRING(READ_CONSTANT())
 #define BINARY_OP(valueType, op)                    \
   do                                                \
@@ -230,7 +235,26 @@ static InterpretResult run()
         }
         push(NUMBER_VAL(-AS_NUMBER(pop())));
         break;
-      
+      case OP_JUMP: {
+        uint16_t offset = READ_SHORT();
+        vm.ip += offset;
+        break;
+      }
+      case OP_JUMP_IF_FALSE: {
+        uint16_t offset = READ_SHORT();
+        if (isFalsey(peek(0))) vm.ip += offset;
+        break;
+      }
+      case OP_JUMP_IF_TRUE: {
+        uint16_t offset = READ_SHORT();
+        if (isTruey(peek(0))) vm.ip += offset;
+        break;
+      }
+      case OP_LOOP: {
+        uint16_t offset = READ_SHORT();
+        vm.ip -= offset;
+        break;
+      }
       case OP_RETURN:
       {
         printValue(pop());
@@ -246,6 +270,7 @@ static InterpretResult run()
 
 #undef READ_BYTE
 #undef READ_CONSTANT
+#undef READ_SHORT
 #undef READ_STRING
 #undef BINARY_OP
 }
