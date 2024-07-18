@@ -1,9 +1,6 @@
-{
-  var a = 0;
-  var sum = 0;
-  while (a < 100) {
-    a = a + 1;
-    sum = sum + a;
-  }
-  print sum;
+fun fib(n) {
+  if (n < 2) return n;
+  return fib(n - 2) + fib(n - 1);
 }
+
+print fib(35);

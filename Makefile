@@ -15,5 +15,7 @@ all: $(SRCS)
 # 指定如何清理编译生成的文件
 test: all
 	./$(TARGET) test.lox
+debug: all
+	lldb ./clox
 clean:
 	rm -f $(TARGET)
