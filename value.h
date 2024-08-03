@@ -5,7 +5,9 @@
 
 typedef struct Obj Obj;
 typedef struct ObjString ObjString;
+typedef struct ObjClosure ObjClosure;
 typedef struct ObjFunction ObjFunction;
+typedef struct ObjUpvalue ObjUpvalue;
 typedef enum {
   VAL_BOOL,
   VAL_NIL, 
