@@ -67,6 +67,8 @@ int disassembleInstruction(Chunk *chunk, int offset)
         return simpleInstruction("OP_CLOSE_UPVALUE", offset);
     case OP_CALL:
         return byteInstruction("OP_CALL", chunk, offset);
+    case OP_CLASS:
+        return constantInstruction("OP_CLASS", chunk, offset);
     case OP_CLOSURE: {
         offset++;
         uint8_t constant = chunk->code[offset++];
@@ -107,6 +109,10 @@ int disassembleInstruction(Chunk *chunk, int offset)
         return simpleInstruction("OP_FALSE", offset);
     case OP_POP:
         return simpleInstruction ("OP_POP", offset);
+    case OP_GET_PROPERTY:
+        return constantInstruction("OP_GET_PROPERTY", chunk, offset);
+    case OP_SET_PROPERTY:
+        return constantInstruction("OP_SET_PROPERTY", chunk, offset);
     case OP_EQUAL:
       return simpleInstruction("OP_EQUAL", offset);
     case OP_GREATER:
