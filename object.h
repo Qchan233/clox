@@ -9,6 +9,8 @@
 
 #define OBJ_TYPE(value)        (AS_OBJ(value)->type)
 
+#define AS_BOUND_METHOD(value) ((ObjBoundMethod*)AS_OBJ(value))
+#define IS_BOUND_METHOD(value) isObjType(value, OBJ_BOUND_METHOD)
 #define IS_CLASS(value)        isObjType(value, OBJ_CLASS)
 #define IS_CLOSURE(value)      isObjType(value, OBJ_CLOSURE)
 #define IS_FUNCTION(value)     isObjType(value, OBJ_FUNCTION)
@@ -22,6 +24,7 @@
 #define AS_STRING(value)       ((ObjString*)AS_OBJ(value))
 #define AS_CSTRING(value)      (((ObjString*)AS_OBJ(value))->chars)
 typedef enum {
+  OBJ_BOUND_METHOD,
   OBJ_CLASS,
   OBJ_CLOSURE,
   OBJ_FUNCTION,
@@ -68,6 +71,7 @@ struct ObjClosure {
 struct ObjClass{
   Obj obj;
   ObjString* name;
+  Table methods;
 };
 
 struct ObjInstance {
@@ -75,6 +79,15 @@ struct ObjInstance {
   ObjClass* klass;
   Table fields;
 };
+
+struct ObjBoundMethod {
+  Obj obj;
+  Value receiver;
+  ObjClosure* method;
+};
+typedef struct ObjBoundMethod ObjBoundMethod;
+ObjBoundMethod* newBoundMethod(Value receiver,
+                               ObjClosure* method);
 typedef struct ObjInstance ObjInstance;
 ObjClass* newClass(ObjString* name);
 ObjClosure* newClosure(ObjFunction* function);

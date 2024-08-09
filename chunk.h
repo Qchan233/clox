@@ -5,6 +5,7 @@
 #include "value.h"  
 typedef enum {
   OP_CLASS,
+  OP_METHOD,
   OP_CONSTANT,
   OP_CLOSURE,
   OP_CLOSE_UPVALUE,
