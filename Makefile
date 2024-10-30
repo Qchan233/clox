@@ -1,5 +1,5 @@
 # 指定编译器
-CC=clang
+CC=gcc
 # 指定编译选项
 CFLAGS = -g -Wall
 # 指定可执行文件的名字
@@ -19,3 +19,11 @@ debug: all
 	lldb ./clox
 clean:
 	rm -f $(TARGET)
+
+PYTHONPATH = ../
+PYTHON = $(PYTHONPATH)python
+PYTHONCONFIG = $(PYTHONPATH)python-config.py
+PYFLAGS = $(shell $(PYTHON) $(PYTHONCONFIG) --cflags)
+PYEXT = $(shell $(PYTHON) $(PYTHONCONFIG) --extension-suffix)
+pymodule:
+	${CC} -Wall -shared -fPIC ${PYFLAGS} ${SRCS} -o pylox${PYEXT}
