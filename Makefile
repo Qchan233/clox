@@ -27,3 +27,6 @@ PYFLAGS = $(shell $(PYTHON) $(PYTHONCONFIG) --cflags)
 PYEXT = $(shell $(PYTHON) $(PYTHONCONFIG) --extension-suffix)
 pymodule:
 	${CC} -Wall -shared -fPIC ${PYFLAGS} ${SRCS} -o pylox${PYEXT}
+
+testpy: pymodule
+	${PYTHON} test.py

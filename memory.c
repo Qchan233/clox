@@ -104,7 +104,7 @@ static void blackenObject(Obj *object) {
   }
 }
 
-static void freeObject(Obj *object) {
+void freeObject(Obj *object) {
 #ifdef DEBUG_LOG_GC
   printf("-- gc end\n");
 #endif
